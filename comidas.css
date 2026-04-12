@@ -1,0 +1,321 @@
+/* Formulario estilo premium para comidas */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: rgba(15, 23, 42, 0.6);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.form-group select option {
+    background: var(--bg-dark);
+    /* Color de fondo sólido oscuro para evitar problemas de contraste nativos */
+    color: var(--text-main);
+}
+
+.btn-submit {
+    width: 100%;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    display: block;
+    text-align: center;
+    border: none;
+}
+
+.result-box {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.calories-highlight {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #3b82f6;
+    /* Azul vibrante */
+    margin: 1rem 0;
+    text-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+.macro-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.macro-item {
+    background: rgba(30, 41, 59, 0.5);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.macro-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+}
+
+.macro-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.macro-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .macro-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Seguimiento Alimenticio Semanal */
+.days-container {
+    width: 100%;
+}
+
+.day-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.day-tab-btn {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.day-tab-btn:hover {
+    background: rgba(59, 130, 246, 0.3);
+    color: white;
+}
+
+.day-tab-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+}
+
+.day-tracker-card {
+    display: none;
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: left;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.day-tracker-card.active {
+    display: block;
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.day-header h3 {
+    margin: 0;
+    color: #93c5fd;
+}
+
+.btn-add-meal {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    line-height: 1;
+}
+
+.btn-add-meal:hover {
+    background: #2563eb;
+}
+
+.meals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.meal-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(15, 23, 42, 0.6);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    transition: opacity 0.2s;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.meal-name {
+    flex: 2;
+    min-width: 150px;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-dark);
+    color: var(--text-main);
+    box-sizing: border-box;
+}
+
+.meal-macros-inputs {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex: 3;
+}
+
+.meal-macros-inputs input {
+    min-width: 5ch;
+    width: auto;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-dark);
+    color: var(--text-main);
+    text-align: center;
+    transition: width 0.1s ease;
+}
+
+.meal-macros-inputs input[type=number]::-webkit-inner-spin-button,
+.meal-macros-inputs input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.btn-del-meal {
+    background: transparent;
+    color: #ef4444;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0 0.5rem;
+    transition: color 0.2s;
+}
+
+.btn-del-meal:hover {
+    color: #b91c1c;
+}
+
+.day-totals {
+    background: rgba(59, 130, 246, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.day-totals h4 {
+    margin: 0 0 0.8rem 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.macro-totals {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.macro-totals div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.macro-totals small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: normal;
+}
+
+.val {
+    font-size: 1.1rem;
+}
+
+/* Personalización de la barra de desplazamiento horizontal */
+.meal-row::-webkit-scrollbar {
+    height: 8px;
+}
+
+.meal-row::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.meal-row::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meal-row::-webkit-scrollbar-thumb:hover {
+    background-color: #1a1a1a;
+}

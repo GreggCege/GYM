@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenamientos - Gym</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="gym.css">
+    <link rel="stylesheet" href="entrenamiento.css">
+    <!-- SortableJS para drag & drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+
+<body>
+    <div class="container container-large">
+        <h1>💪 Entrenamientos</h1>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="gym.html" class="menu-item" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Volver al Menú
+                Principal</a>
+        </div>
+
+        <main class="content-split">
+            <!-- Sección de Ejercicios -->
+            <section class="card section-ejercicios" id="ejercicios">
+                <h2>Ejercicios</h2>
+                <p style="margin-bottom: 1.5rem;">Selecciona el día y agrega ejercicios a tu rutina.</p>
+                <div class="exercise-list" id="exercise-list">
+                    <!-- Ejercicio 1 -->
+                    <div class="exercise-card">
+                        <div class="exercise-info">
+                            <strong>Press Banca</strong> (Pecho)
+                        </div>
+                        <div class="exercise-actions">
+                            <select class="day-select">
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                                <option value="domingo">Domingo</option>
+                            </select>
+                            <button class="btn-add" data-name="Press Banca (Pecho)">Añadir</button>
+                        </div>
+                    </div>
+                    <!-- Ejercicio 2 -->
+                    <div class="exercise-card">
+                        <div class="exercise-info">
+                            <strong>Peso Muerto</strong> (Femoral)
+                        </div>
+                        <div class="exercise-actions">
+                            <select class="day-select">
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                                <option value="domingo">Domingo</option>
+                            </select>
+                            <button class="btn-add" data-name="Peso Muerto (Femoral)">Añadir</button>
+                        </div>
+                    </div>
+                    <!-- Ejercicio 3 -->
+                    <div class="exercise-card">
+                        <div class="exercise-info">
+                            <strong>Sentadilla</strong> (Cuádriceps)
+                        </div>
+                        <div class="exercise-actions">
+                            <select class="day-select">
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                                <option value="domingo">Domingo</option>
+                            </select>
+                            <button class="btn-add" data-name="Sentadilla (Cuádriceps)">Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Mi Rutina -->
+            <section class="card section-rutina" id="mi-rutina">
+                <h2>Mi Rutina</h2>
+                <p style="margin-bottom: 1.5rem;">Puedes arrastrar para acomodarlos o eliminarlos.</p>
+                <div class="days-grid">
+                    <div class="day-column">
+                        <h3>Lunes</h3>
+                        <div class="routine-list" id="list-lunes"></div>
+                    </div>
+                    <div class="day-column">
+                        <h3>Martes</h3>
+                        <div class="routine-list" id="list-martes"></div>
+                    </div>
+                    <div class="day-column">
+                        <h3>Miércoles</h3>
+                        <div class="routine-list" id="list-miercoles"></div>
+                    </div>
+                    <div class="day-column">
+                        <h3>Jueves</h3>
+                        <div class="routine-list" id="list-jueves"></div>
+                    </div>
+                    <div class="day-column">
+                        <h3>Viernes</h3>
+                        <div class="routine-list" id="list-viernes"></div>
+                    </div>
+                    <div class="day-column">
+                        <h3>Sábado</h3>
+                        <div class="routine-list" id="list-sabado"></div>
+                    </div>
+                    <div class="day-column day-domingo">
+                        <h3>Domingo</h3>
+                        <div class="rest-recommendation">Recomedación: Día de descanso activo o total. 🛌</div>
+                        <div class="routine-list" id="list-domingo"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="entrenamientos.js"></script>
+</body>
+
+</html>

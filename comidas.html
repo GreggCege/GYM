@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comidas - Gym</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="gym.css">
+    <link rel="stylesheet" href="comidas.css">
+</head>
+
+<body>
+    <div class="container" style="max-width: 1200px; width: 95%;">
+        <h1>🥗 Comidas</h1>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="gym.html" class="menu-item" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">🔙 Volver al Menú
+                Principal</a>
+        </div>
+        <main class="content">
+            <section class="card" style="width: 100%; max-width: 600px; margin: 0 auto;">
+                <h2>Calculadora de Calorías y Macros</h2>
+                <p>Ingresa tus datos para descubrir tu requerimiento calórico diario de mantenimiento.</p>
+                <form id="macroForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="peso">Peso (kg):</label>
+                            <input type="number" id="peso" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estatura">Estatura (cm):</label>
+                            <input type="number" id="estatura" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edad">Edad (años):</label>
+                            <input type="number" id="edad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="genero">Género:</label>
+                            <select id="genero" required>
+                                <option value="hombre">Hombre</option>
+                                <option value="mujer">Mujer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="actividad">Nivel de Actividad:</label>
+                            <select id="actividad" required>
+                                <option value="1.2">Sedentario (Poco o nulo ejercicio)</option>
+                                <option value="1.375">Ligero (Ejercicio 1-3 días x semana)</option>
+                                <option value="1.55">Moderado (Ejercicio 3-5 días x semana)</option>
+                                <option value="1.725">Fuerte (Ejercicio 6-7 días x semana)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="objetivo">Objetivo Físico:</label>
+                            <select id="objetivo" required>
+                                <option value="mantenimiento">Mantenimiento (Mantener peso)</option>
+                                <option value="definicion">Definición (-500 kcal)</option>
+                                <option value="volumen">Volumen (+300 kcal)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="menu-item btn-submit">Calcular Macros</button>
+                </form>
+
+                <div id="resultContainer" class="result-box" style="display: none;">
+                    <h3>Tus Resultados Diarios</h3>
+                    <div class="calories-highlight"><span id="caloriasTotal">0</span> kcal</div>
+                    <p>Distribución recomendada de macronutrientes:</p>
+                    <div class="macro-grid">
+                        <div class="macro-item">
+                            <span class="macro-label">Proteínas</span>
+                            <span class="macro-value" id="proteinasVal">0g</span>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-label">Grasas</span>
+                            <span class="macro-value" id="grasasVal">0g</span>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-label">Carbohidratos</span>
+                            <span class="macro-value" id="carboVal">0g</span>
+                        </div>
+                    </div>
+                    <button id="btnEditar" class="menu-item btn-submit"
+                        style="background: rgba(30, 41, 59, 0.7); margin-top: 2.5rem; letter-spacing: 0.5px;">✏️ Editar
+                        Mis Datos</button>
+                </div>
+            </section>
+
+            <section class="card" style="width: 100%; max-width: 100%; margin: 2rem auto 0; box-sizing: border-box;">
+                <h2>Seguimiento Alimenticio Semanal</h2>
+                <p>Selecciona un día, anota lo que comes y registra tus macros. Calcularemos el total por ti.</p>
+
+                <div class="day-tabs" id="day-tabs">
+                    <!-- Pestañas generadas por JS -->
+                </div>
+
+                <div id="days-container" class="days-container">
+                    <!-- Generado dinámicamente por JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="comidas.js"></script>
+</body>
+
+</html>

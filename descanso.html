@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descanso - Gym</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="gym.css">
+    <link rel="stylesheet" href="descanso.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>🛌 Descanso</h1>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="gym.html" class="menu-item" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">🔙 Volver al Menú
+                Principal</a>
+        </div>
+        <main class="content">
+            <section class="card" style="width: 100%; max-width: 600px; margin: 0 auto;">
+                <h2>Registro Diario de Sueño</h2>
+                <p>Ingresa a qué hora te dormiste y a qué hora te levantaste para sumar y visualizar el total de tus
+                    horas de descanso.</p>
+
+                <!-- Formulario de captura controlado por JS -->
+                <form id="sleepForm">
+                    <div class="form-group">
+                        <label for="sleepDate">Fecha del registro:</label>
+                        <input type="date" id="sleepDate" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="sleepTime">Dormí a las:</label>
+                            <input type="time" id="sleepTime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="wakeTime">Desperté a las:</label>
+                            <input type="time" id="wakeTime" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="menu-item btn-submit">Registrar Sueño Hoy</button>
+                </form>
+
+                <!-- Contenedor dinámico de historial -->
+                <div class="log-container">
+                    <h3 style="color: var(--text-main); margin-bottom: 1.5rem; font-size: 1.4rem; text-align: center;">
+                        Tu Historial de Descanso</h3>
+                    <div id="sleepRecords"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script con el sistema de rastreo de horas y persistencia -->
+    <script src="descanso.js"></script>
+</body>
+
+</html>
