@@ -18,22 +18,35 @@ const spans = {
     carbos: document.getElementById('carboVal')
 };
 
-// Intentar cargar perfil guardado en el navegador al abrir la página
-let savedProfile = JSON.parse(localStorage.getItem('macroProfile'));
+// Firebase variables (assigned when auth is ready)
+let currentUserUid = null;
 
-if (savedProfile) {
-    // Rellenar formulario con los datos guardados
-    inputs.peso.value = savedProfile.peso;
-    inputs.estatura.value = savedProfile.estatura;
-    inputs.edad.value = savedProfile.edad;
-    inputs.genero.value = savedProfile.genero;
-    inputs.actividad.value = savedProfile.actividad;
-    inputs.objetivo.value = savedProfile.objetivo;
+// Escuchar evento personalizado de auth-guard.js
+window.addEventListener('authReady', (e) => {
+    currentUserUid = e.detail.uid;
+    
+    // Intentar cargar perfil guardado en la nube al abrir la página
+    db.collection('users').doc(currentUserUid).collection('macros').doc('profile').get()
+        .then((doc) => {
+            if (doc.exists) {
+                let savedProfile = doc.data();
+                
+                // Rellenar formulario con los datos guardados
+                inputs.peso.value = savedProfile.peso;
+                inputs.estatura.value = savedProfile.estatura;
+                inputs.edad.value = savedProfile.edad;
+                inputs.genero.value = savedProfile.genero;
+                inputs.actividad.value = savedProfile.actividad;
+                inputs.objetivo.value = savedProfile.objetivo;
 
-    // Mostrar directamente el contenedor con los resultados guardados ocultando el formulario
-    renderResults(savedProfile.resultados);
-    macroForm.style.display = 'none';
-}
+                // Mostrar directamente el contenedor con los resultados guardados ocultando el formulario
+                renderResults(savedProfile.resultados);
+                macroForm.style.display = 'none';
+            }
+        });
+
+    loadWeeklyData();
+});
 
 // Evento de hacer click en "Editar" vuelve a mostrar el formulario y oculta los resultados
 btnEditar.addEventListener('click', function () {
@@ -105,7 +118,10 @@ macroForm.addEventListener('submit', function (e) {
     };
 
     currentProfile.resultados = resultados;
-    localStorage.setItem('macroProfile', JSON.stringify(currentProfile));
+    
+    if (currentUserUid) {
+        db.collection('users').doc(currentUserUid).collection('macros').doc('profile').set(currentProfile);
+    }
 
     // Mostrar UI ocultando el formulario
     renderResults(resultados);
@@ -193,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    loadWeeklyData();
+    // loadWeeklyData se llama ahora dentro del evento 'authReady'
 });
 
 function addMealRow(dayId, data = { name: '', cal: '', pro: '', car: '', fat: '' }, save = true) {
@@ -267,6 +283,8 @@ function updateTotals(dayId) {
 }
 
 function saveWeeklyData() {
+    if (!currentUserUid) return;
+    
     const weeklyData = {};
     daysOfWeek.forEach(day => {
         const dayId = day.toLowerCase().replace('é', 'e').replace('á', 'a');
@@ -285,21 +303,26 @@ function saveWeeklyData() {
         });
         weeklyData[dayId] = meals;
     });
-    localStorage.setItem('weeklyMacros', JSON.stringify(weeklyData));
+    
+    db.collection('users').doc(currentUserUid).collection('macros').doc('weekly').set(weeklyData);
 }
 
 function loadWeeklyData() {
-    const saved = localStorage.getItem('weeklyMacros');
-    if (saved) {
-        const data = JSON.parse(saved);
-        daysOfWeek.forEach(day => {
-            const dayId = day.toLowerCase().replace('é', 'e').replace('á', 'a');
-            if (data[dayId] && data[dayId].length > 0) {
-                data[dayId].forEach(meal => {
-                    addMealRow(dayId, meal, false);
+    if (!currentUserUid) return;
+
+    db.collection('users').doc(currentUserUid).collection('macros').doc('weekly').get()
+        .then((doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                daysOfWeek.forEach(day => {
+                    const dayId = day.toLowerCase().replace('é', 'e').replace('á', 'a');
+                    if (data[dayId] && data[dayId].length > 0) {
+                        data[dayId].forEach(meal => {
+                            addMealRow(dayId, meal, false);
+                        });
+                        updateTotals(dayId);
+                    }
                 });
-                updateTotals(dayId);
             }
         });
-    }
 }
