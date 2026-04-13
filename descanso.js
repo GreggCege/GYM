@@ -4,9 +4,34 @@ const sleepRecords = document.getElementById('sleepRecords');
 // Poner la fecha de hoy por defecto apenas cargue la página
 document.getElementById('sleepDate').valueAsDate = new Date();
 
-// Extraer los registros guardados del "localStorage" del navegador, para persistencia
-let records = JSON.parse(localStorage.getItem('sleepRecords')) || [];
+// Variable Firebase
+let currentUserUid = null;
+let records = [];
 
+window.addEventListener('authReady', (e) => {
+    currentUserUid = e.detail.uid;
+    loadRecordsFromFirebase();
+});
+
+function loadRecordsFromFirebase() {
+    if (!currentUserUid) return;
+    db.collection('users').doc(currentUserUid).collection('sleep').doc('data').get()
+        .then((doc) => {
+            if (doc.exists && doc.data().records) {
+                records = doc.data().records;
+                renderRecords();
+            } else {
+                renderRecords(); // Render empty state
+            }
+        });
+}
+
+function saveRecordsToFirebase() {
+    if (!currentUserUid) return;
+    db.collection('users').doc(currentUserUid).collection('sleep').doc('data').set({
+        records: records
+    });
+}
 // Función matemática que cálcula la diferencia entre 2 horas (considerando cambios de día)
 function calculateSleepHours(sleepTime, wakeTime) {
     const [sleepHours, sleepMinutes] = sleepTime.split(':').map(Number);
@@ -78,10 +103,9 @@ function renderRecords() {
     });
 }
 
-// Borra un registro usando su fecha (Identificador provicional) y recalcula la lista
 window.deleteRecord = function (dateToMatch) {
     records = records.filter(record => record.date !== dateToMatch);
-    localStorage.setItem('sleepRecords', JSON.stringify(records));
+    saveRecordsToFirebase();
     renderRecords();
 }
 
@@ -103,10 +127,9 @@ sleepForm.addEventListener('submit', function (e) {
     const hours = calculateSleepHours(sleepTime, wakeTime);
 
     records.push({ date, sleepTime, wakeTime, hours });
-    localStorage.setItem('sleepRecords', JSON.stringify(records)); // Se guarda instantaneamente en el navegador
+    saveRecordsToFirebase();
 
     renderRecords();
 });
 
-// Al iniciar por primera vez, pintar todo.
-renderRecords();
+// Nota: renderRecords() inicial se llama ahora después de cargar desde Firebase en loadRecordsFromFirebase()
