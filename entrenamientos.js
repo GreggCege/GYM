@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+    const days = ['llunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
     let currentUserUid = null;
 
     // Escuchar cuando la sesión esté lista
