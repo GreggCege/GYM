@@ -15,6 +15,7 @@
 <body>
     <div class="container">
         <h1>GYM</h1>
+        <div id="user-info"></div>
 
         <nav class="menu">
             <a href="comidas.html" class="menu-item">🥗 Comidas</a>
@@ -41,6 +42,15 @@
             </section>
         </main>
     </div>
+
+    <!-- Firebase Compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth Guard -->
+    <script src="firebase-config.js"></script>
+    <script src="auth-guard.js"></script>
 </body>
 
 </html>
