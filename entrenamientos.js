@@ -1,33 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
     const days = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+    let currentUserUid = null;
 
-    // Función para guardar toda la rutina en LocalStorage
+    // Escuchar cuando la sesión esté lista
+    window.addEventListener('authReady', (e) => {
+        currentUserUid = e.detail.uid;
+        loadRoutine();
+    });
+
+    // Función para guardar toda la rutina en la BD
     function saveRoutine() {
+        if (!currentUserUid) return;
         const routineData = {};
         days.forEach(day => {
             const listElement = document.getElementById(`list-${day}`);
             if (listElement) {
-                // Obtenemos el texto de cada span dentro de esta lista de día
                 const items = listElement.querySelectorAll('.routine-item span');
                 routineData[day] = Array.from(items).map(span => span.textContent);
             }
         });
-        localStorage.setItem('gymRoutine', JSON.stringify(routineData));
+        db.collection('users').doc(currentUserUid).collection('routines').doc('data').set(routineData);
     }
 
-    // Función para cargar la rutina desde LocalStorage
+    // Función para cargar la rutina desde la BD
     function loadRoutine() {
-        const savedData = localStorage.getItem('gymRoutine');
-        if (savedData) {
-            const routineData = JSON.parse(savedData);
-            days.forEach(day => {
-                if (routineData[day]) {
-                    routineData[day].forEach(exerciseName => {
-                        addExerciseToRoutine(exerciseName, day, false); // false para no re-guardar durante la carga inicial
+        if (!currentUserUid) return;
+        
+        // Limpiar rutinas visuales primero para no duplicar en caso de recargas raras
+        days.forEach(day => {
+            const listElement = document.getElementById(`list-${day}`);
+            if(listElement) listElement.innerHTML = '';
+        });
+
+        db.collection('users').doc(currentUserUid).collection('routines').doc('data').get()
+            .then((doc) => {
+                if (doc.exists) {
+                    const routineData = doc.data();
+                    days.forEach(day => {
+                        if (routineData[day]) {
+                            routineData[day].forEach(exerciseName => {
+                                addExerciseToRoutine(exerciseName, day, false); 
+                            });
+                        }
                     });
                 }
             });
-        }
     }
 
     // 1. Inicializar SortableJS en cada lista de días para poder arrastrar y soltar
@@ -92,6 +109,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 3. Cargar la rutina inicial al renderizar la página
-    loadRoutine();
+    // Initial load happens in authReady now
 });
